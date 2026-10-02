@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.pytest_cache/
+models/
+mlruns/
+mlflow.db
+logs/
+data/feedback.csv
+.idea/
+Sujet_Examen_*.pdf

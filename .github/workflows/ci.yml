@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"
+
+jobs:
+  test-train-retrain:
+    runs-on: ubuntu-latest
+    env:
+      MLFLOW_DISABLE_AGENT_HINT: "1"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: pytest -q
+      - name: Train the model (fails if ROC-AUC is below the floor)
+        run: python -m scripts.train
+      - name: Retraining triggers + champion/challenger
+        run: python -m scripts.retrain
+      - name: Keep the model and the MLflow history
+        uses: actions/upload-artifact@v7
+        with:
+          name: model
+          path: |
+            models/
+            mlflow.db
+            mlruns/
+
+  deploy:
+    needs: test-train-retrain
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          name: model
+      - name: Build the API Docker image
+        run: docker build -t bank-marketing-api .
+      - name: Start the container and check it responds
+        run: |
+          docker run -d -p 8000:8000 --name api bank-marketing-api
+          sleep 5
+          curl --fail http://127.0.0.1:8000/health
