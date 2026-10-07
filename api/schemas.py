@@ -10,7 +10,6 @@ class ClientProfile(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     client_id: str = Field(min_length=1, max_length=64, description="Pseudonymized identifier, never the name")
-    default: YesNoUnknown
     housing: YesNoUnknown
     loan: YesNoUnknown
     contact: Literal["cellular", "telephone"]

@@ -9,7 +9,7 @@ import api.main as main
 from bank import SCENARIOS, build_pipeline, load_data
 
 VALID_CLIENT = {
-    "client_id": "c-001", "default": "no", "housing": "yes", "loan": "no", "contact": "cellular",
+    "client_id": "c-001", "housing": "yes", "loan": "no", "contact": "cellular",
     "month": "may", "day_of_week": "mon", "campaign": 1, "pdays": 999, "previous": 0,
     "poutcome": "nonexistent", "emp_var_rate": -1.8, "cons_price_idx": 92.9,
     "cons_conf_idx": -46.2, "euribor3m": 1.3, "nr_employed": 5099.1,

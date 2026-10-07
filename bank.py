@@ -18,7 +18,7 @@ CATEGORICAL = ["job", "marital", "education", "default", "housing", "loan",
                "contact", "month", "day_of_week", "poutcome"]
 ALL_FEATURES = NUMERIC + ["pdays"] + CATEGORICAL
 
-SENSITIVE = ["age", "job", "marital", "education"]
+SENSITIVE = ["age", "job", "marital", "education", "default"]
 CAMPAIGN_HISTORY = ["campaign", "pdays", "previous", "poutcome"]
 
 
