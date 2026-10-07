@@ -22,7 +22,6 @@ def score_page():
         col1, col2, col3 = st.columns(3)
         profile = {
             "client_id": col1.text_input("Client ID (pseudonymized)", "c-0001"),
-            "default": col1.selectbox("Credit in default?", ["no", "unknown", "yes"]),
             "housing": col1.selectbox("Housing loan?", ["no", "yes", "unknown"]),
             "loan": col1.selectbox("Personal loan?", ["no", "yes", "unknown"]),
             "contact": col1.selectbox("Phone type", ["cellular", "telephone"]),
