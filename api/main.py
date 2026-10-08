@@ -29,7 +29,7 @@ state = {}
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    handler = logger.add(LOG_PATH, serialize=True, rotation="10 MB", retention="395 days")
+    handler = logger.add(LOG_PATH, serialize=True, rotation="10 MB", retention="365 days")
     if MODEL_PATH.exists():
         info = json.loads(INFO_PATH.read_text(encoding="utf-8"))
         api_features = {RENAME.get(f, f) for f in ClientProfile.model_fields if f != "client_id"}
