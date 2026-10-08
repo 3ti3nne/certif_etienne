@@ -48,7 +48,7 @@ def build_pipeline(features, model):
     if numeric:
         steps.append(("num", StandardScaler(), numeric))
     if "pdays" in features:
-        # pdays = 999 means "never contacted", not a number of days: impute it and add a 0/1 flag
+        # pdays = 999 is a "never contacted" code: impute it and add a 0/1 flag
         pdays = make_pipeline(SimpleImputer(missing_values=999, strategy="median", add_indicator=True),
                               StandardScaler())
         steps.append(("pdays", pdays, ["pdays"]))
