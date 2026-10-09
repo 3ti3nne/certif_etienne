@@ -38,6 +38,8 @@ def test_precision_at_k_looks_only_at_the_best_scores():
 def test_rates_by_group_counts_selection_and_errors():
     table = rates_by_group(y_true=[1, 0, 1, 0, 1, 0], called=[1, 1, 0, 0, 1, 0], groups=["a", "a", "a", "b", "b", "b"])
     assert table.loc["a", "call_rate"] == pytest.approx(2 / 3)
+    assert table.loc["a", "share_of_calls"] == pytest.approx(2 / 3)
+    assert table.loc["a", "precision"] == pytest.approx(0.5)
     assert table.loc["a", "false_negative_rate"] == pytest.approx(0.5)
     assert table.loc["a", "false_positive_rate"] == pytest.approx(1.0)
     assert table.loc["b", "disparate_impact"] == pytest.approx(0.5)
