@@ -71,7 +71,10 @@ def rates_by_group(y_true, called, groups):
     df = pd.DataFrame({"actual": np.asarray(y_true), "called": np.asarray(called), "group": np.asarray(groups)})
     table = df.groupby("group").agg(count=("actual", "size"),
                                     subscription_rate=("actual", "mean"),
-                                    call_rate=("called", "mean"))
+                                    call_rate=("called", "mean"),
+                                    calls=("called", "sum"))
+    table["share_of_calls"] = table.pop("calls") / df["called"].sum()
+    table["precision"] = df[df["called"] == 1].groupby("group")["actual"].mean()
     subscribers = df[df["actual"] == 1].groupby("group")["called"].mean()
     non_subscribers = df[df["actual"] == 0].groupby("group")["called"].mean()
     table["false_negative_rate"] = 1 - subscribers
